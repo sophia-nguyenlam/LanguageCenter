@@ -21,7 +21,7 @@ namespace LanguageCenter.Areas.Admin.Pages.Results
         public string? SearchTerm { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public int Page { get; set; } = 1;
+        public new int Page { get; set; } = 1;
 
         public int TotalPages { get; set; }
 

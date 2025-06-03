@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 
-namespace LanguageCenter.Areas.Student.Pages.HomeModel
+namespace LanguageCenter.Areas.Student.Pages
 {
     [Authorize(Roles = "Student")]
     public class HomeModel : PageModel

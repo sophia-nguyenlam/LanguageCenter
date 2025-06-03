@@ -24,7 +24,7 @@ namespace LanguageCenter.Areas.Admin.Pages.Users
         public string? StatusFilter { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public int Page { get; set; } = 1;
+        public new int Page { get; set; } = 1;
 
         public int PageSize { get; set; } = 10;
 
