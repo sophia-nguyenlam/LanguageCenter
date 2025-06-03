@@ -1,0 +1,138 @@
+﻿@page "{id?}"
+@using Microsoft.AspNetCore.Components
+@model LanguageCenter.Areas.Admin.Pages.Users.DetailsModel
+@{
+    ViewData["Title"] = "User Details";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white d-flex align-items-center">
+                    <i class="bi bi-person-lines-fill fs-3 me-2"></i>
+                    <h2 class="mb-0">User Details</h2>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4 fw-semibold">Username:</dt>
+                        <dd class="col-sm-8">@Model.User.UserName</dd>
+
+                        <dt class="col-sm-4 fw-semibold">Email:</dt>
+                        <dd class="col-sm-8">@Model.User.Email</dd>
+
+                        <dt class="col-sm-4 fw-semibold">Full Name:</dt>
+                        <dd class="col-sm-8">@Model.User.FullName</dd>
+
+                        <dt class="col-sm-4 fw-semibold">Role:</dt>
+                        <dd class="col-sm-8">@Model.User.Role</dd>
+
+                        <dt class="col-sm-4 fw-semibold">Gender:</dt>
+                        <dd class="col-sm-8">
+                            @if (string.IsNullOrWhiteSpace(Model.User.Gender))
+                            {
+                                @((MarkupString)"<span class='text-muted'>Not specified</span>")
+                            }
+                            else
+                            {
+                                @Model.User.Gender
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4 fw-semibold">Date of Birth:</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.User.DateOfBirth.HasValue)
+                            {
+                                @Model.User.DateOfBirth.Value.ToString("dd MMM yyyy")
+                            }
+                            else
+                            {
+                                @((MarkupString)"<span class='text-muted'>Not specified</span>")
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4 fw-semibold">Address:</dt>
+                        <dd class="col-sm-8">
+                            @if (!string.IsNullOrWhiteSpace(Model.User.Address))
+                            {
+                                @Model.User.Address
+                            }
+                            else
+                            {
+                                @((MarkupString)"<span class='text-muted'>Not specified</span>")
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4 fw-semibold">Active:</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.User.IsActive)
+                            {
+                                    <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                    <span class="badge bg-secondary">Inactive</span>
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4 fw-semibold">Created Date:</dt>
+                        <dd class="col-sm-8">@Model.User.CreatedDate.ToLocalTime().ToString("dd MMM yyyy HH:mm")</dd>
+                    </dl>
+
+                    @if (Model.User.Role == "Teacher" && Model.User.TeacherProfile != null)
+                    {
+                            <hr />
+                            <h5 class="text-primary mb-3">Teacher Profile</h5>
+                            <dl class="row">
+                                <dt class="col-sm-4 fw-semibold">Expertise:</dt>
+                                <dd class="col-sm-8">
+                                @if (string.IsNullOrWhiteSpace(Model.User.TeacherProfile.Expertise))
+                                {
+                                    @((MarkupString)"<span class='text-muted'>Not specified</span>")
+                                }
+                                else
+                                {
+                                    @Model.User.TeacherProfile.Expertise
+                                }
+                                </dd>
+
+                                <dt class="col-sm-4 fw-semibold">Years of Experience:</dt>
+                                <dd class="col-sm-8">@Model.User.TeacherProfile.YearsOfExperience</dd>
+                            </dl>
+                    }
+                    else if (Model.User.Role == "Student" && Model.User.StudentProfile != null)
+                    {
+                            <hr />
+                            <h5 class="text-success mb-3">Student Profile</h5>
+                            <dl class="row">
+                                <dt class="col-sm-4 fw-semibold">Enrollment Date:</dt>
+                                <dd class="col-sm-8">@Model.User.StudentProfile.EnrollmentDate.ToString("dd MMM yyyy")</dd>
+
+                                <dt class="col-sm-4 fw-semibold">Parent Contact:</dt>
+                                <dd class="col-sm-8">
+                                @if (!string.IsNullOrWhiteSpace(Model.User.StudentProfile.ParentContact))
+                                {
+                                    @Model.User.StudentProfile.ParentContact
+                                }
+                                else
+                                {
+                                    @((MarkupString)"<span class='text-muted'>Not specified</span>")
+                                }
+                                </dd>
+                            </dl>
+                    }
+
+                    <div class="text-end mt-4">
+                        <a asp-page="Index" class="btn btn-outline-primary me-2">
+                            <i class="bi bi-arrow-left-circle me-1"></i> Back to List
+                        </a>
+                        <a asp-page="Edit" asp-route-id="@Model.User.Id" class="btn btn-primary">
+                            <i class="bi bi-pencil-square me-1"></i> Edit
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+﻿@page "{id:int}"
+@model LanguageCenter.Areas.Admin.Pages.Results.EditModel
+@{
+    ViewData["Title"] = "Edit Result";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark d-flex align-items-center">
+                    <i class="bi bi-pencil-square fs-3 me-2"></i>
+                    <h2 class="mb-0">Edit Result</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <input type="hidden" asp-for="Result.Id" />
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Student Name</label>
+                            <input class="form-control" value="@Model.Result.Student.FullName" disabled />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Course</label>
+                            <input class="form-control" value="@Model.Result.Course.Name" disabled />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Result.Score" class="form-label fw-semibold"></label>
+                            <input asp-for="Result.Score" class="form-control" type="number" step="0.01" min="0" max="100" />
+                            <span asp-validation-for="Result.Score" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Result.Feedback" class="form-label fw-semibold"></label>
+                            <textarea asp-for="Result.Feedback" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Result.Feedback" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-page="Details" asp-route-id="@Model.Result.Id" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-circle me-1"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-save me-1"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,40 @@
+﻿@page
+@model LanguageCenter.Areas.Admin.Pages.Students.CreateModel
+@{
+    ViewData["Title"] = "Add Student Profile";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="max-w-3xl mx-auto mt-10 bg-white p-6 rounded shadow">
+    <h2 class="text-2xl font-semibold mb-4">Add Student Profile</h2>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+            <div class="text-red-600 mb-4">@TempData["ErrorMessage"]</div>
+    }
+
+    <form method="post" class="space-y-4">
+        <div>
+            <label for="UserId" class="block font-medium mb-1">Select Student User</label>
+            <select asp-for="StudentProfile.UserId" class="w-full border rounded px-3 py-2" asp-items="@(new SelectList(Model.UsersWithoutProfile, "Id", "FullName"))" required>
+                <option value="">-- Select User --</option>
+            </select>
+            <span asp-validation-for="StudentProfile.UserId" class="text-red-600 text-sm"></span>
+        </div>
+
+        <div>
+            <label asp-for="StudentProfile.ParentContact" class="block font-medium mb-1">Parent Contact</label>
+            <input asp-for="StudentProfile.ParentContact" class="w-full border rounded px-3 py-2" />
+            <span asp-validation-for="StudentProfile.ParentContact" class="text-red-600 text-sm"></span>
+        </div>
+
+        <div class="pt-4">
+            <button type="submit" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">Create Profile</button>
+            <a asp-page="./Index" class="ml-4 text-gray-600 hover:underline">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}

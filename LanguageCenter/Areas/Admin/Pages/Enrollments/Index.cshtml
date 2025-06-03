@@ -1,0 +1,97 @@
+﻿@page
+@model LanguageCenter.Areas.Admin.Pages.Enrollments.IndexModel
+@{
+    ViewData["Title"] = "Enrollment Management";
+    Layout = "~/Areas/Admin/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid px-4 mt-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
+        <h1 class="h3 fw-bold text-dark">Enrollment Management</h1>
+    </div>
+
+    <!-- Search & Filter -->
+    <form method="get" class="row g-2 mb-3 align-items-center">
+        <div class="col-md-5">
+            <input type="text" name="SearchTerm" class="form-control" placeholder="Search by student name..." value="@Model.SearchTerm" />
+        </div>
+        <div class="col-md-3">
+            <select class="form-select" name="StatusFilter" onchange="this.form.submit()">
+                <option value="">All Statuses</option>
+                <option value="Pending" selected="@(Model.StatusFilter == "Pending" ? "selected" : null)">Pending</option>
+                <option value="Confirmed" selected="@(Model.StatusFilter == "Confirmed" ? "selected" : null)">Confirmed</option>
+                <option value="Completed" selected="@(Model.StatusFilter == "Completed" ? "selected" : null)">Completed</option>
+            </select>
+        </div>
+        <div class="col-md-auto">
+            <button type="submit" class="btn btn-outline-secondary">
+                <i class="bi bi-search"></i> Search
+            </button>
+        </div>
+    </form>
+
+    <p class="text-muted small mb-2">Total Enrollments: <strong>@Model.TotalRecords</strong></p>
+
+    <div class="table-responsive bg-white shadow rounded p-3">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Student</th>
+                    <th>Course</th>
+                    <th>Enroll Date</th>
+                    <th>Status</th>
+                    <th style="width: 160px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var enrollment in Model.Enrollments)
+                {
+                        <tr>
+                            <td>@enrollment.Student.FullName</td>
+                            <td>@enrollment.Course.Name</td>
+                            <td>@enrollment.EnrollDate.ToString("dd MMM yyyy")</td>
+                            <td>
+                            @switch (enrollment.Status)
+                            {
+                                case "Confirmed":
+                                                <span class="badge bg-success">Confirmed</span>
+                                    break;
+                                case "Completed":
+                                                <span class="badge bg-primary">Completed</span>
+                                    break;
+                                default:
+                                                <span class="badge bg-warning text-dark">Pending</span>
+                                    break;
+                            }
+                            </td>
+                            <td>
+                                <form method="post" asp-page-handler="UpdateStatus" class="d-flex gap-1">
+                                    <input type="hidden" name="EnrollmentId" value="@enrollment.Id" />
+                                    <select name="NewStatus" class="form-select form-select-sm">
+                                        <option value="Pending" selected="@(enrollment.Status == "Pending" ? "selected" : null)">Pending</option>
+                                        <option value="Confirmed" selected="@(enrollment.Status == "Confirmed" ? "selected" : null)">Confirmed</option>
+                                        <option value="Completed" selected="@(enrollment.Status == "Completed" ? "selected" : null)">Completed</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
+                                </form>
+                            </td>
+                        </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model.TotalPages > 1)
+    {
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center mt-3">
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                            <li class="page-item @(i == Model.Page ? "active" : "")">
+                                <a class="page-link" href="?Page=@i&SearchTerm=@Model.SearchTerm&StatusFilter=@Model.StatusFilter">@i</a>
+                            </li>
+                }
+                </ul>
+            </nav>
+    }
+</div>

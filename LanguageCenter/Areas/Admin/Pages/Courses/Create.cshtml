@@ -1,0 +1,86 @@
+﻿@page
+@model LanguageCenter.Areas.Admin.Pages.Courses.CreateModel
+@{
+    ViewData["Title"] = "Create New Course";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white d-flex align-items-center">
+                    <i class="bi bi-journal-plus fs-3 me-2"></i>
+                    <h2 class="mb-0">Create New Course</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Course.Name" class="form-label fw-semibold">
+                                <i class="bi bi-book-fill me-1"></i> Name
+                            </label>
+                            <input asp-for="Course.Name" class="form-control" placeholder="Enter course name" />
+                            <span asp-validation-for="Course.Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Course.Description" class="form-label fw-semibold">
+                                <i class="bi bi-card-text me-1"></i> Description
+                            </label>
+                            <textarea asp-for="Course.Description" class="form-control" rows="3" placeholder="Enter course description"></textarea>
+                            <span asp-validation-for="Course.Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Course.DurationInWeeks" class="form-label fw-semibold">
+                                <i class="bi bi-clock me-1"></i> Duration (Weeks)
+                            </label>
+                            <input asp-for="Course.DurationInWeeks" type="number" min="1" class="form-control" placeholder="Enter number of weeks" />
+                            <span asp-validation-for="Course.DurationInWeeks" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Course.TuitionFee" class="form-label fw-semibold">
+                                <i class="bi bi-cash-stack me-1"></i> Tuition Fee (VND)
+                            </label>
+                            <input asp-for="Course.TuitionFee" type="number" step="0.01" min="0" class="form-control" placeholder="Enter tuition fee" />
+                            <span asp-validation-for="Course.TuitionFee" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Course.Level" class="form-label fw-semibold">
+                                <i class="bi bi-layers-half me-1"></i> Level
+                            </label>
+                            <select asp-for="Course.Level" class="form-select">
+                                <option value="">-- Select Level --</option>
+                                <option>Beginner</option>
+                                <option>Intermediate</option>
+                                <option>Advanced</option>
+                            </select>
+                            <span asp-validation-for="Course.Level" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Course.Language" class="form-label fw-semibold">
+                                <i class="bi bi-translate me-1"></i> Language
+                            </label>
+                            <input asp-for="Course.Language" class="form-control" placeholder="e.g., English, French" />
+                            <span asp-validation-for="Course.Language" class="text-danger"></span>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-success me-2">
+                                <i class="bi bi-check-lg me-1"></i> Create
+                            </button>
+                            <a asp-page="Index" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-circle me-1"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

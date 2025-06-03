@@ -1,0 +1,114 @@
+﻿@page
+@model LanguageCenter.Areas.Admin.Pages.Users.CreateModel
+@{
+    ViewData["Title"] = "Create New User";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white d-flex align-items-center">
+                    <i class="bi bi-person-plus-fill fs-3 me-2"></i>
+                    <h2 class="mb-0">Create New User</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.UserName" class="form-label fw-semibold">
+                                <i class="bi bi-person-circle me-1"></i> Username
+                            </label>
+                            <input asp-for="Input.UserName" class="form-control" placeholder="Enter username" />
+                            <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.Email" class="form-label fw-semibold">
+                                <i class="bi bi-envelope-fill me-1"></i> Email
+                            </label>
+                            <input asp-for="Input.Email" type="email" class="form-control" placeholder="Enter email address" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.Password" class="form-label fw-semibold">
+                                <i class="bi bi-lock-fill me-1"></i> Password
+                            </label>
+                            <input asp-for="Input.Password" type="password" class="form-control" placeholder="Enter password" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.Role" class="form-label fw-semibold">
+                                <i class="bi bi-person-badge-fill me-1"></i> Role
+                            </label>
+                            <select asp-for="Input.Role" class="form-select" aria-label="Select role">
+                                <option value="">-- Select Role --</option>
+                                <option>Admin</option>
+                                <option>Teacher</option>
+                                <option>Student</option>
+                            </select>
+                            <span asp-validation-for="Input.Role" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.FullName" class="form-label fw-semibold">
+                                <i class="bi bi-person-fill me-1"></i> Full Name
+                            </label>
+                            <input asp-for="Input.FullName" class="form-control" placeholder="Enter full name" />
+                            <span asp-validation-for="Input.FullName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.Gender" class="form-label fw-semibold">
+                                <i class="bi bi-gender-ambiguous me-1"></i> Gender
+                            </label>
+                            <select asp-for="Input.Gender" class="form-select" aria-label="Select gender">
+                                <option value="">-- Select Gender --</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span asp-validation-for="Input.Gender" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.DateOfBirth" class="form-label fw-semibold">
+                                <i class="bi bi-calendar-date me-1"></i> Date of Birth
+                            </label>
+                            <input asp-for="Input.DateOfBirth" type="date" class="form-control" />
+                            <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.Address" class="form-label fw-semibold">
+                                <i class="bi bi-geo-alt-fill me-1"></i> Address
+                            </label>
+                            <textarea asp-for="Input.Address" class="form-control" rows="2" placeholder="Enter address"></textarea>
+                            <span asp-validation-for="Input.Address" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-check form-switch mb-4">
+                            <input asp-for="Input.IsActive" class="form-check-input" type="checkbox" />
+                            <label asp-for="Input.IsActive" class="form-check-label fw-semibold">
+                                Active
+                            </label>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-success me-2">
+                                <i class="bi bi-check-lg me-1"></i> Create
+                            </button>
+                            <a asp-page="Index" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-circle me-1"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

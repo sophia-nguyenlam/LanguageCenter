@@ -1,0 +1,42 @@
+﻿@page "{id:int}"
+@model LanguageCenter.Areas.Admin.Pages.Teachers.EditModel
+@{
+    ViewData["Title"] = "Edit Teacher Profile";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid px-4 mt-4">
+    <h1 class="h3 fw-bold mb-4 text-dark">Edit Teacher Profile</h1>
+
+    <form method="post" class="needs-validation" novalidate>
+        <input type="hidden" asp-for="Input.Id" />
+
+        <div class="mb-3">
+            <label class="form-label">Teacher User</label>
+            <input type="text" 
+                   class="form-control" 
+                   disabled value="@Model.Input.UserId" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Input.Expertise" class="form-label"></label>
+            <input asp-for="Input.Expertise" class="form-control" />
+            <span asp-validation-for="Input.Expertise" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Input.YearsOfExperience" class="form-label"></label>
+            <input asp-for="Input.YearsOfExperience" type="number" min="0" max="100" class="form-control" />
+            <span asp-validation-for="Input.YearsOfExperience" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}

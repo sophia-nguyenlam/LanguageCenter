@@ -1,0 +1,59 @@
+﻿@page "{id?}"
+@model LanguageCenter.Areas.Admin.Pages.Courses.DetailsModel
+@{
+    ViewData["Title"] = "Course Details";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white d-flex align-items-center">
+                    <i class="bi bi-journal-bookmark-fill fs-3 me-2"></i>
+                    <h2 class="mb-0">Course Details</h2>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4 fw-semibold">Name:</dt>
+                        <dd class="col-sm-8">@Model.Course.Name</dd>
+
+                        <dt class="col-sm-4 fw-semibold">Description:</dt>
+                        <dd class="col-sm-8">
+                            @if (string.IsNullOrWhiteSpace(Model.Course.Description))
+                            {
+                                    <span class="text-muted">Not specified</span>
+
+                            }
+                            else
+                            {
+                                @Model.Course.Description
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4 fw-semibold">Duration (weeks):</dt>
+                        <dd class="col-sm-8">@Model.Course.DurationInWeeks</dd>
+
+                        <dt class="col-sm-4 fw-semibold">Tuition Fee:</dt>
+                        <dd class="col-sm-8">@Model.Course.TuitionFee.ToString("C")</dd>
+
+                        <dt class="col-sm-4 fw-semibold">Level:</dt>
+                        <dd class="col-sm-8">@Model.Course.Level</dd>
+
+                        <dt class="col-sm-4 fw-semibold">Language:</dt>
+                        <dd class="col-sm-8">@Model.Course.Language</dd>
+                    </dl>
+
+                    <div class="text-end mt-4">
+                        <a asp-page="Index" class="btn btn-outline-primary me-2">
+                            <i class="bi bi-arrow-left-circle me-1"></i> Back to List
+                        </a>
+                        <a asp-page="Edit" asp-route-id="@Model.Course.Id" class="btn btn-primary">
+                            <i class="bi bi-pencil-square me-1"></i> Edit
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

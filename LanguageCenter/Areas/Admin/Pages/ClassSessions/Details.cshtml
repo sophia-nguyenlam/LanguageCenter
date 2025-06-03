@@ -1,0 +1,58 @@
+﻿@page "{id?}"
+@model LanguageCenter.Areas.Admin.Pages.ClassSessions.DetailsModel
+@{
+    ViewData["Title"] = "Class Session Details";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white d-flex align-items-center">
+                    <i class="bi bi-calendar-event fs-3 me-2"></i>
+                    <h2 class="mb-0">Class Session Details</h2>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4 fw-semibold">Course:</dt>
+                        <dd class="col-sm-8">@Model.ClassSession.Course.Name</dd>
+
+                        <dt class="col-sm-4 fw-semibold">Teacher:</dt>
+                        <dd class="col-sm-8">@Model.ClassSession.Teacher.FullName (@Model.ClassSession.Teacher.UserName)</dd>
+
+                        <dt class="col-sm-4 fw-semibold">Start Time:</dt>
+                        <dd class="col-sm-8">@Model.ClassSession.StartTime.ToString("dd MMM yyyy HH:mm")</dd>
+
+                        <dt class="col-sm-4 fw-semibold">End Time:</dt>
+                        <dd class="col-sm-8">@Model.ClassSession.EndTime.ToString("dd MMM yyyy HH:mm")</dd>
+
+                        <dt class="col-sm-4 fw-semibold">Location:</dt>
+                        <dd class="col-sm-8">
+                            @if (!string.IsNullOrWhiteSpace(Model.ClassSession.Location))
+                            {
+                                @Model.ClassSession.Location
+                            }
+                            else
+                            {
+                                <span class='text-muted'>Not specified</span>
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4 fw-semibold">Total Attendances:</dt>
+                        <dd class="col-sm-8">@Model.ClassSession.Attendances.Count</dd>
+                    </dl>
+
+                    <div class="text-end mt-4">
+                        <a asp-page="Index" class="btn btn-outline-primary me-2">
+                            <i class="bi bi-arrow-left-circle me-1"></i> Back to List
+                        </a>
+                        <a asp-page="Edit" asp-route-id="@Model.ClassSession.Id" class="btn btn-primary">
+                            <i class="bi bi-pencil-square me-1"></i> Edit
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

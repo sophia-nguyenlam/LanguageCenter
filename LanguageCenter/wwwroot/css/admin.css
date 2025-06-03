@@ -1,0 +1,64 @@
+﻿body {
+    overflow-x: hidden;
+    background-color: #f8f9fa;
+}
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: #343a40;
+    padding-top: 60px;
+    z-index: 1000;
+    transition: left 0.3s ease;
+}
+
+    #sidebar .nav-link {
+        color: #ffffff;
+        transition: background-color 0.3s;
+    }
+
+        #sidebar .nav-link:hover {
+            background-color: #495057;
+            color: #ffffff;
+        }
+
+#main-content {
+    margin-left: 250px;
+    padding-top: 56px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #sidebar {
+        left: -250px; /* Ẩn sidebar */
+    }
+
+        #sidebar.active {
+            left: 0; /* Hiện sidebar */
+        }
+
+    #main-content {
+        margin-left: 0;
+    }
+
+        #main-content.shifted {
+            margin-left: 250px;
+        }
+}
+
+/* Xóa hẳn rule mâu thuẫn sau */
+/* #sidebar.active {
+    display: none;
+}
+
+#main-content.shifted {
+    margin-left: 0;
+} */
+
+.table th, .table td {
+    vertical-align: middle;
+}

@@ -1,0 +1,52 @@
+﻿@page
+@model LanguageCenter.Areas.Student.Pages.HomeModel
+@{
+    ViewData["Title"] = "Student Dashboard";
+}
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-4 text-center mb-4">
+            <img src="@Model.CurrentUser.AvatarUrl ?? "/images/default-avatar.png"" class="img-fluid rounded-circle shadow" style="width: 150px;" />
+            <h4 class="mt-3">@Model.CurrentUser.FullName</h4>
+            <p class="text-muted">@Model.CurrentUser.Email</p>
+            <p><i class="bi bi-geo-alt-fill me-1"></i>@Model.CurrentUser.Address</p>
+        </div>
+
+        <div class="col-md-8">
+            <h5 class="mb-4">My Courses</h5>
+            @if (Model.Enrollments.Count == 0)
+            {
+                    <div class="alert alert-info">You have not enrolled in any course yet.</div>
+            }
+            else
+            {
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover shadow-sm">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Language</th>
+                                    <th>Level</th>
+                                    <th>Status</th>
+                                    <th>Enroll Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var enrollment in Model.Enrollments)
+                            {
+                                        <tr>
+                                            <td>@enrollment.Course.Name</td>
+                                            <td>@enrollment.Course.Language</td>
+                                            <td>@enrollment.Course.Level</td>
+                                            <td><span class="badge bg-primary">@enrollment.Status</span></td>
+                                            <td>@enrollment.EnrollDate.ToString("dd MMM yyyy")</td>
+                                        </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+            }
+        </div>
+    </div>
+</div>

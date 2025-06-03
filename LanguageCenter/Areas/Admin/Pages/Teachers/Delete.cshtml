@@ -1,0 +1,48 @@
+﻿@page "{id:int}"
+@model LanguageCenter.Areas.Admin.Pages.Teachers.DeleteModel
+@{
+    ViewData["Title"] = "Delete Teacher Profile";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="card border-danger shadow-sm">
+                <div class="card-header bg-danger text-white d-flex align-items-center">
+                    <i class="bi bi-trash3-fill fs-3 me-2"></i>
+                    <h2 class="mb-0">Confirm Delete Teacher Profile</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning d-flex align-items-center" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill fs-3 me-3"></i>
+                        <div>
+                            <strong>Warning!</strong> Are you sure you want to permanently delete this teacher profile? This action cannot be undone.
+                        </div>
+                    </div>
+
+                    <dl class="row mt-4">
+                        <dt class="col-sm-4 fw-semibold">Full Name</dt>
+                        <dd class="col-sm-8">@Model.TeacherProfile.User.FullName</dd>
+
+                        <dt class="col-sm-4 fw-semibold">Expertise</dt>
+                        <dd class="col-sm-8">@Model.TeacherProfile.Expertise</dd>
+
+                        <dt class="col-sm-4 fw-semibold">Years of Experience</dt>
+                        <dd class="col-sm-8">@Model.TeacherProfile.YearsOfExperience</dd>
+                    </dl>
+                </div>
+                <div class="card-footer text-end">
+                    <form method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger me-2" aria-label="Delete Teacher Profile">
+                            <i class="bi bi-trash3 me-1"></i> Delete
+                        </button>
+                    </form>
+                    <a asp-page="./Index" class="btn btn-outline-secondary" aria-label="Cancel Delete">
+                        <i class="bi bi-x-circle me-1"></i> Cancel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+﻿@page
+@model LanguageCenter.Areas.Admin.Pages.Results.IndexModel
+@{
+    ViewData["Title"] = "Manage Results";
+    Layout = "~/Areas/Admin/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid px-4 mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 text-dark fw-bold">Manage Results</h1>
+        <a asp-page="/Results/Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Add Result
+        </a>
+    </div>
+
+    <!-- Search form -->
+    <form method="get" class="row g-2 mb-3">
+        <div class="col-md-4">
+            <input type="text" name="SearchTerm" class="form-control" placeholder="Search by student or course name..." value="@Model.SearchTerm" />
+        </div>
+        <div class="col-md-auto">
+            <button type="submit" class="btn btn-outline-secondary">
+                <i class="bi bi-search"></i> Search
+            </button>
+        </div>
+    </form>
+
+    <p class="text-muted">Total: <strong>@Model.Results.Count</strong> result(s)</p>
+
+    <div class="table-responsive bg-white shadow-sm rounded p-3">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Student</th>
+                    <th>Course</th>
+                    <th class="text-center">Score</th>
+                    <th>Feedback</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in Model.Results)
+                {
+                        <tr>
+                            <td>@result.Student.FullName</td>
+                            <td>@result.Course.Name</td>
+                            <td class="text-center">@result.Score?.ToString("0.00") ?? "N/A"</td>
+                            <td>@(string.IsNullOrWhiteSpace(result.Feedback) ? "-" : result.Feedback)</td>
+                            <td class="text-end">
+                                <a asp-page="/Results/Details" asp-route-id="@result.Id" class="btn btn-sm btn-outline-primary me-1">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a asp-page="/Results/Edit" asp-route-id="@result.Id" class="btn btn-sm btn-outline-warning me-1">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a asp-page="/Results/Delete" asp-route-id="@result.Id" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model.TotalPages > 1)
+    {
+            <nav class="mt-3">
+                <ul class="pagination justify-content-center">
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                            <li class="page-item @(i == Model.Page ? "active" : "")">
+                                <a class="page-link" href="?Page=@i&SearchTerm=@Model.SearchTerm">@i</a>
+                            </li>
+                }
+                </ul>
+            </nav>
+    }
+</div>

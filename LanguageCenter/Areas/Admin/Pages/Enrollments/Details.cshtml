@@ -1,0 +1,43 @@
+﻿@page "{id:int}"
+@model LanguageCenter.Areas.Admin.Pages.Enrollments.DetailsModel
+@{
+    ViewData["Title"] = "Enrollment Details";
+    Layout = "~/Areas/Admin/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid px-4 mt-4">
+    <h1 class="h3 mb-4">Enrollment Details</h1>
+
+    <div class="card shadow border-0">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Student Name</dt>
+                <dd class="col-sm-9">@Model.Enrollment.Student.FullName</dd>
+
+                <dt class="col-sm-3">Course</dt>
+                <dd class="col-sm-9">@Model.Enrollment.Course.Name</dd>
+
+                <dt class="col-sm-3">Enroll Date</dt>
+                <dd class="col-sm-9">@Model.Enrollment.EnrollDate.ToString("dd MMM yyyy")</dd>
+
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">
+                    @switch (Model.Enrollment.Status)
+                    {
+                        case "Confirmed":
+                                    <span class="badge bg-success">Confirmed</span>
+                            break;
+                        case "Completed":
+                                    <span class="badge bg-primary">Completed</span>
+                            break;
+                        default:
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                            break;
+                    }
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <a asp-page="Index" class="btn btn-secondary mt-3">Back to List</a>
+</div>

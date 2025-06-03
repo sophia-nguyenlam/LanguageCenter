@@ -1,0 +1,59 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="login-container d-flex justify-content-center align-items-center min-vh-100">
+    <section class="login-form p-4 shadow-sm rounded">
+        <form id="account" method="post" novalidate>
+            @Html.AntiForgeryToken()
+
+            <h2 class="login-title mb-4 text-center">Login with your account</h2>
+            <div asp-validation-summary="ModelOnly" class="validation-summary text-danger mb-3" role="alert"></div>
+
+            <div class="form-group floating-group mb-4">
+                <input asp-for="Input.Email" type="email" class="floating-input" autocomplete="username" required />
+                <label asp-for="Input.Email">Email</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group floating-group mb-4">
+                <input asp-for="Input.Password" type="password" class="floating-input" autocomplete="current-password" required />
+                <label asp-for="Input.Password">Password</label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-4">
+                <input class="form-check-input" asp-for="Input.RememberMe" id="rememberMe"/>
+                <label class="form-check-label" asp-for="Input.RememberMe" for="rememberMe">
+                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-login w-100 mb-3">Log in</button>
+
+            <div class="text-center links-group">
+                <a id="forgot-password" asp-page="./ForgotPassword" class="link-minimal">Forgot your password?</a><br />
+                <a asp-page="./SelectRole" asp-route-returnUrl="@Model.ReturnUrl" class="link-minimal">Register as a new user</a><br />
+                <a id="resend-confirmation" asp-page="./ResendEmailConfirmation" class="link-minimal">Resend email confirmation</a>
+            </div>
+        </form>
+    </section>
+</div>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+        <script>
+            document.querySelectorAll('.floating-input').forEach(input => {
+                if (input.value.trim() !== '') {
+                    input.classList.add('has-content');
+                }
+                input.addEventListener('input', function () {
+                    this.classList.toggle('has-content', this.value.trim() !== '');
+                });
+            });
+        </script>
+}

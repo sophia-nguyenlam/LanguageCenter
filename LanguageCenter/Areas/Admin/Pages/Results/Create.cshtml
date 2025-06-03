@@ -1,0 +1,71 @@
+﻿@page
+@model LanguageCenter.Areas.Admin.Pages.Results.CreateModel
+@{
+    ViewData["Title"] = "Add New Result";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white d-flex align-items-center">
+                    <i class="bi bi-journal-plus fs-3 me-2"></i>
+                    <h2 class="mb-0">Add New Result</h2>
+                </div>
+                <div class="card-body">
+                    <form id="createResult" method="post" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Result.StudentId" class="form-label fw-semibold">
+                                <i class="bi bi-person-fill me-1"></i> Student
+                            </label>
+                            <select asp-for="Result.StudentId" class="form-select" asp-items="Model.StudentList">
+                                <option value="">-- Select Student --</option>
+                            </select>
+                            <span asp-validation-for="Result.StudentId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Result.CourseId" class="form-label fw-semibold">
+                                <i class="bi bi-book-fill me-1"></i> Course
+                            </label>
+                            <select asp-for="Result.CourseId" class="form-select" asp-items="Model.CourseList">
+                                <option value="">-- Select Course --</option>
+                            </select>
+                            <span asp-validation-for="Result.CourseId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Result.Score" class="form-label fw-semibold">
+                                <i class="bi bi-123 me-1"></i> Score
+                            </label>
+                            <input asp-for="Result.Score" class="form-control" placeholder="Enter score" />
+                            <span asp-validation-for="Result.Score" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Result.Feedback" class="form-label fw-semibold">
+                                <i class="bi bi-chat-left-dots-fill me-1"></i> Feedback
+                            </label>
+                            <textarea asp-for="Result.Feedback" class="form-control" rows="2" placeholder="Optional feedback"></textarea>
+                            <span asp-validation-for="Result.Feedback" class="text-danger"></span>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-success me-2">
+                                <i class="bi bi-check-lg me-1"></i> Save
+                            </button>
+                            <a asp-page="Index" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-circle me-1"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,111 @@
+﻿@page
+@model LanguageCenter.Areas.Admin.Pages.Users.EditModel
+@{
+    ViewData["Title"] = "Edit User";
+    Layout = "~/Areas/Admin/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid px-4 mt-4">
+    <h1 class="h3 fw-bold mb-4 text-dark">Edit User</h1>
+
+    <form method="post" class="needs-validation" novalidate>
+        <input type="hidden" asp-for="Input.Id" />
+
+        <div class="mb-3">
+            <label asp-for="Input.UserName" class="form-label">Username</label>
+            <input asp-for="Input.UserName" class="form-control" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Input.Email" class="form-label"></label>
+            <input asp-for="Input.Email" class="form-control" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Input.FullName" class="form-label"></label>
+            <input asp-for="Input.FullName" class="form-control" />
+            <span asp-validation-for="Input.FullName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Input.Role" class="form-label">Role</label>
+            <input asp-for="Input.Role" class="form-control" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Input.Gender" class="form-label"></label>
+            <select asp-for="Input.Gender" class="form-select">
+                <option value="">-- Select Gender --</option>
+                <option value="Male" selected="@(Model.Input.Gender == "Male" ? "selected" : null)">Male</option>
+                <option value="Female" selected="@(Model.Input.Gender == "Female" ? "selected" : null)">Female</option>
+                <option value="Other" selected="@(Model.Input.Gender == "Other" ? "selected" : null)">Other</option>
+            </select>
+            <span asp-validation-for="Input.Gender" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Input.DateOfBirth" class="form-label"></label>
+            <input asp-for="Input.DateOfBirth" class="form-control" type="date" />
+            <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Input.Address" class="form-label"></label>
+            <textarea asp-for="Input.Address" class="form-control" rows="2"></textarea>
+            <span asp-validation-for="Input.Address" class="text-danger"></span>
+        </div>
+
+        <div class="form-check mb-4">
+            <input asp-for="Input.IsActive" class="form-check-input" type="checkbox" />
+            <label asp-for="Input.IsActive" class="form-check-label"></label>
+        </div>
+
+        @* Phần thông tin chuyên biệt theo Role *@
+        @if (Model.Input.Role == "Teacher")
+        {
+                <fieldset class="border p-3 mb-4 rounded">
+                    <legend class="float-none w-auto px-2">Teacher Profile</legend>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.TeacherProfile.Expertise" class="form-label"></label>
+                        <input asp-for="Input.TeacherProfile.Expertise" class="form-control" />
+                        <span asp-validation-for="Input.TeacherProfile.Expertise" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.TeacherProfile.YearsOfExperience" class="form-label"></label>
+                        <input asp-for="Input.TeacherProfile.YearsOfExperience" class="form-control" type="number" min="0" max="100" />
+                        <span asp-validation-for="Input.TeacherProfile.YearsOfExperience" class="text-danger"></span>
+                    </div>
+                </fieldset>
+        }
+        else if (Model.Input.Role == "Student")
+        {
+                <fieldset class="border p-3 mb-4 rounded">
+                    <legend class="float-none w-auto px-2">Student Profile</legend>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.StudentProfile.EnrollmentDate" class="form-label"></label>
+                        <input asp-for="Input.StudentProfile.EnrollmentDate" class="form-control" type="date" />
+                        <span asp-validation-for="Input.StudentProfile.EnrollmentDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.StudentProfile.ParentContact" class="form-label"></label>
+                        <input asp-for="Input.StudentProfile.ParentContact" class="form-control" />
+                        <span asp-validation-for="Input.StudentProfile.ParentContact" class="text-danger"></span>
+                    </div>
+                </fieldset>
+        }
+
+        <div class="d-flex justify-content-between">
+            <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}

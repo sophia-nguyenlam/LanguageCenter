@@ -1,0 +1,40 @@
+﻿@model LanguageCenter.Areas.Admin.Pages.DashboardModel
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm border-primary h-100">
+            <div class="card-body text-center">
+                <i class="fa-solid fa-users fa-2x text-primary mb-2"></i>
+                <h5 class="card-title">Total Users</h5>
+                <p class="fs-3 fw-bold">@Model.TotalUsers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm border-success h-100">
+            <div class="card-body text-center">
+                <i class="fa-solid fa-user-graduate fa-2x text-success mb-2"></i>
+                <h5 class="card-title">Active Students</h5>
+                <p class="fs-3 fw-bold">@Model.ActiveStudents</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm border-warning h-100">
+            <div class="card-body text-center">
+                <i class="fa-solid fa-chalkboard-teacher fa-2x text-warning mb-2"></i>
+                <h5 class="card-title">Total Teachers</h5>
+                <p class="fs-3 fw-bold">@Model.TotalTeachers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm border-danger h-100">
+            <div class="card-body text-center">
+                <i class="fa-solid fa-book-open fa-2x text-danger mb-2"></i>
+                <h5 class="card-title">Total Courses</h5>
+                <p class="fs-3 fw-bold">@Model.TotalCourses</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@page
+@model SelectRoleModel
+@{
+    ViewData["Title"] = "Select Role";
+}
+
+<h2 class="text-center mb-4">Select Your Role</h2>
+
+<form method="get" asp-area="Identity" asp-page="/Account/Register" class="text-center" novalidate>
+    <div class="row justify-content-center">
+        @foreach (var role in Model.Roles)
+        {
+                <div class="col-md-4 mb-3">
+                    <input type="radio" class="btn-check" name="Role" id="@role" value="@role" autocomplete="off" />
+                    <label class="btn btn-outline-primary w-100" for="@role">
+                        <h4 class="mb-0">@role</h4>
+                        <small>Register as a @role</small>
+                    </label>
+                </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary mt-3" disabled id="continueBtn">Continue</button>
+</form>
+
+@section Scripts {
+        <script>
+            const radios = document.querySelectorAll('input[name="Role"]');
+            const continueBtn = document.getElementById("continueBtn");
+
+            radios.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    continueBtn.disabled = false;
+                });
+            });
+        </script>
+}
