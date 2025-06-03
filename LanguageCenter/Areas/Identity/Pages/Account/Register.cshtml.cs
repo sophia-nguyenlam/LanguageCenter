@@ -142,7 +142,7 @@ namespace LanguageCenter.Areas.Identity.Pages.Account
                     {
                         "Admin" => RedirectToPage("/Admin/Dashboard"),
                         "Teacher" => RedirectToPage("/Teacher/Home"),
-                        "Student" => RedirectToPage("/Student/Home"),
+                        "Student" => RedirectToPage("/Courses/Index", new { area = "Student" }),
                         _ => LocalRedirect(returnUrl)
                     };
                 }

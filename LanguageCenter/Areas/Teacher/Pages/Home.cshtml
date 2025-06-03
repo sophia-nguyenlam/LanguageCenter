@@ -1,0 +1,95 @@
+﻿@page
+@model LanguageCenter.Areas.Teacher.Pages.HomeModel
+@{
+    ViewData["Title"] = "Teacher Dashboard";
+    Layout = "~/Areas/Teacher/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-4 text-center mb-4">
+            <img src="@(Model.CurrentUser.AvatarUrl ?? $"https://cataas.com/cat?width=150&height=150&random={Model.CurrentUser.Id}")" class="img-fluid rounded-circle shadow" style="width: 150px;" />
+            <h4 class="mt-3">@Model.CurrentUser.FullName</h4>
+            <p class="text-muted">@Model.CurrentUser.Email</p>
+            <p><i class="bi bi-geo-alt-fill me-1"></i>@Model.CurrentUser.Address</p>
+            <p><i class="bi bi-briefcase-fill me-1"></i>@(Model.TeacherProfile?.Expertise ?? "Not specified")</p>
+        </div>
+
+        <div class="col-md-8">
+            <h5 class="mb-4">My Upcoming Sessions</h5>
+            @if (Model.UpcomingSessions.Count == 0)
+            {
+                <div class="alert alert-info">You have no upcoming sessions scheduled.</div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover shadow-sm">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Course</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Location</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var session in Model.UpcomingSessions)
+                            {
+                                <tr>
+                                    <td>@session.Course.Name</td>
+                                    <td>@session.StartTime.ToString("dd MMM yyyy")</td>
+                                    <td>@session.StartTime.ToString("HH:mm") - @session.EndTime.ToString("HH:mm")</td>
+                                    <td>@(string.IsNullOrEmpty(session.Location) ? "Not specified" : session.Location)</td>
+                                    <td class="text-center">
+                                        <a asp-area="Teacher" asp-page="/Sessions/Details" asp-route-id="@session.Id" 
+                                          class="btn btn-sm btn-outline-primary me-1" title="View Session Details">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a asp-area="Teacher" asp-page="/Attendance/Create" asp-route-sessionId="@session.Id" 
+                                          class="btn btn-sm btn-outline-success" title="Take Attendance">
+                                            <i class="bi bi-check-circle"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <a asp-area="Teacher" asp-page="/Sessions/Index" class="btn btn-outline-primary w-100 h-100 d-flex flex-column align-items-center justify-content-center py-4">
+                                <i class="bi bi-calendar-event fs-2 mb-2"></i>
+                                <span>View All Sessions</span>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a asp-area="Teacher" asp-page="/Attendance/Index" class="btn btn-outline-success w-100 h-100 d-flex flex-column align-items-center justify-content-center py-4">
+                                <i class="bi bi-calendar-check-fill fs-2 mb-2"></i>
+                                <span>Manage Attendance</span>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a asp-area="Teacher" asp-page="/Profile/Index" class="btn btn-outline-info w-100 h-100 d-flex flex-column align-items-center justify-content-center py-4">
+                                <i class="bi bi-person-circle fs-2 mb-2"></i>
+                                <span>Update Profile</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

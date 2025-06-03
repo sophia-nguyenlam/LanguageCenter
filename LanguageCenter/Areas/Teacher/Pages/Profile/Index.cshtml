@@ -1,0 +1,97 @@
+@page
+@model LanguageCenter.Areas.Teacher.Pages.Profile.IndexModel
+@{
+    ViewData["Title"] = "My Profile";
+    Layout = "~/Areas/Teacher/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0"><i class="bi bi-person-circle me-2"></i>My Profile</h2>
+                </div>
+                <div class="card-body">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="bi bi-check-circle-fill me-2"></i> @TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+                    
+                    <form method="post" class="needs-validation" novalidate>
+                        <div class="row mb-4">
+                            <div class="col-md-4 text-center">
+                                <img src="@(Model.CurrentUser.AvatarUrl ?? $"https://cataas.com/cat?width=150&height=150&random={Model.CurrentUser.Id}")" 
+                                     alt="Profile Picture" class="img-fluid rounded-circle shadow" style="width: 150px;">
+                                <p class="mt-2 text-muted small">Profile Picture</p>
+                            </div>
+                            <div class="col-md-8">
+                                <dl class="row">
+                                    <dt class="col-sm-4">Full Name:</dt>
+                                    <dd class="col-sm-8">@Model.CurrentUser.FullName</dd>
+                                    
+                                    <dt class="col-sm-4">Email:</dt>
+                                    <dd class="col-sm-8">@Model.CurrentUser.Email</dd>
+                                    
+                                    <dt class="col-sm-4">Account Created:</dt>
+                                    <dd class="col-sm-8">@Model.CurrentUser.CreatedDate.ToString("dd MMM yyyy")</dd>
+                                    
+                                    <dt class="col-sm-4">Active Status:</dt>
+                                    <dd class="col-sm-8">
+                                        @if (Model.CurrentUser.IsActive)
+                                        {
+                                            <span class="badge bg-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Inactive</span>
+                                        }
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        
+                        <hr />
+                        
+                        <h4 class="mb-3">Teacher Information</h4>
+                        
+                        <div class="mb-3">
+                            <label asp-for="TeacherProfile.Expertise" class="form-label">Expertise</label>
+                            <input asp-for="TeacherProfile.Expertise" class="form-control" />
+                            <span asp-validation-for="TeacherProfile.Expertise" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="TeacherProfile.YearsOfExperience" class="form-label">Years of Experience</label>
+                            <input asp-for="TeacherProfile.YearsOfExperience" class="form-control" type="number" min="0" max="50" />
+                            <span asp-validation-for="TeacherProfile.YearsOfExperience" class="text-danger"></span>
+                        </div>
+                        
+                        <hr />
+                        
+                        <h4 class="mb-3">Personal Information</h4>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Address" class="form-label">Address</label>
+                            <textarea asp-for="Address" class="form-control" rows="2"></textarea>
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save me-1"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -99,7 +99,7 @@ namespace LanguageCenter.Areas.Identity.Pages.Account
                     else if (userRoles.Contains("Teacher"))
                         return Redirect("/Teacher/Home");
                     else if (userRoles.Contains("Student"))
-                        return Redirect("/Student/Home");
+                        return RedirectToPage("/Courses/Index", new { area = "Student" });
 
                     return LocalRedirect(returnUrl);
                 }

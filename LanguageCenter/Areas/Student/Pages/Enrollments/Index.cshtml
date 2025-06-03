@@ -1,0 +1,92 @@
+@page
+@model LanguageCenter.Areas.Student.Pages.Enrollments.IndexModel
+@{
+    ViewData["Title"] = "My Enrollments";
+    Layout = "~/Areas/Student/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid px-4 mt-4">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="Student" asp-page="/Home">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">My Enrollments</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
+        <h1 class="h3 fw-bold text-dark">My Enrollments</h1>
+    </div>
+
+    <!-- Success Message -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i>
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (Model.Enrollments.Count == 0)
+    {
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle me-2"></i>
+            You have not enrolled in any courses yet. 
+            <a asp-area="Student" asp-page="/Courses/Index" class="alert-link">Browse available courses</a>
+        </div>
+    }
+    else
+    {
+        <p class="text-muted small mb-3">Total Enrollments: <strong>@Model.Enrollments.Count</strong></p>
+
+        <div class="table-responsive bg-white shadow rounded p-3">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Course</th>
+                        <th>Language</th>
+                        <th>Level</th>
+                        <th>Duration</th>
+                        <th>Tuition Fee</th>
+                        <th>Enroll Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var enrollment in Model.Enrollments)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@enrollment.Course.Name</strong>
+                                @if (!string.IsNullOrWhiteSpace(enrollment.Course.Description))
+                                {
+                                    <br><small class="text-muted">@enrollment.Course.Description</small>
+                                }
+                            </td>
+                            <td>@enrollment.Course.Language</td>
+                            <td>@enrollment.Course.Level</td>
+                            <td>@enrollment.Course.DurationInWeeks weeks</td>
+                            <td>@enrollment.Course.TuitionFee.ToString("C")</td>
+                            <td>@enrollment.EnrollDate.ToString("dd MMM yyyy")</td>
+                            <td>
+                                @switch (enrollment.Status)
+                                {
+                                    case "Confirmed":
+                                        <span class="badge bg-success">Confirmed</span>
+                                        break;
+                                    case "Completed":
+                                        <span class="badge bg-primary">Completed</span>
+                                        break;
+                                    default:
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                        break;
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

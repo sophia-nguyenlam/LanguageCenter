@@ -55,16 +55,18 @@ namespace LanguageCenter.Areas.Admin.Pages.Enrollments
                 .ToListAsync();
         }
 
-        public async Task<IActionResult> OnPostUpdateStatusAsync(int id, string newStatus)
+        public async Task<IActionResult> OnPostUpdateStatusAsync(int EnrollmentId, string NewStatus)
         {
-            var enrollment = await _context.Enrollments.FindAsync(id);
+            var enrollment = await _context.Enrollments.FindAsync(EnrollmentId);
             if (enrollment == null)
                 return NotFound();
 
-            enrollment.Status = newStatus;
+            enrollment.Status = NewStatus;
             await _context.SaveChangesAsync();
 
-            return RedirectToPage(new { SearchTerm, StatusFilter, Page });
+            return Page();
         }
     }
 }
+
+

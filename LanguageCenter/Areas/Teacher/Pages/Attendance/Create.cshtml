@@ -1,0 +1,84 @@
+@page
+@model LanguageCenter.Areas.Teacher.Pages.Attendance.CreateModel
+@{
+    ViewData["Title"] = "Take Attendance";
+    Layout = "~/Areas/Teacher/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white d-flex align-items-center">
+                    <i class="bi bi-calendar-check-fill fs-3 me-2"></i>
+                    <h2 class="mb-0">Take Attendance</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info mb-4">
+                        <div class="d-flex">
+                            <i class="bi bi-info-circle-fill fs-4 me-2"></i>
+                            <div>
+                                <strong>Course:</strong> @Model.ClassSession.Course.Name<br />
+                                <strong>Date:</strong> @Model.ClassSession.StartTime.ToString("dd MMM yyyy")<br />
+                                <strong>Time:</strong> @Model.ClassSession.StartTime.ToString("HH:mm") - @Model.ClassSession.EndTime.ToString("HH:mm")<br />
+                                <strong>Location:</strong> @(string.IsNullOrEmpty(Model.ClassSession.Location) ? "Not specified" : Model.ClassSession.Location)
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (!Model.Students.Any())
+                    {
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            There are no students enrolled in this course.
+                        </div>
+                    }
+                    else 
+                    {
+                        <form method="post">
+                            <input type="hidden" asp-for="ClassSessionId" />
+
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Student</th>
+                                            <th>Present</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.Students.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" name="Attendances[@i].StudentId" value="@Model.Students[i].Id" />
+                                                    @Model.Students[i].FullName
+                                                </td>
+                                                <td>
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input" type="checkbox" 
+                                                               name="Attendances[@i].IsPresent" value="true" checked>
+                                                        <label class="form-check-label">Present</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                <a asp-page="/Sessions/Details" asp-route-id="@Model.ClassSessionId" class="btn btn-outline-secondary me-md-2">
+                                    <i class="bi bi-x-circle me-1"></i> Cancel
+                                </a>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="bi bi-save me-1"></i> Save Attendance
+                                </button>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

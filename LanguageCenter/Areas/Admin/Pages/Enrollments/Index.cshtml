@@ -66,6 +66,7 @@
                             </td>
                             <td>
                                 <form method="post" asp-page-handler="UpdateStatus" class="d-flex gap-1">
+                                    @Html.AntiForgeryToken()
                                     <input type="hidden" name="EnrollmentId" value="@enrollment.Id" />
                                     <select name="NewStatus" class="form-select form-select-sm">
                                         <option value="Pending" selected="@(enrollment.Status == "Pending" ? "selected" : null)">Pending</option>

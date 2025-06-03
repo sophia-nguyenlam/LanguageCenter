@@ -1,0 +1,128 @@
+@page "{id:int}"
+@model LanguageCenter.Areas.Teacher.Pages.Sessions.DetailsModel
+@{
+    ViewData["Title"] = "Session Details";
+    Layout = "~/Areas/Teacher/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white d-flex align-items-center">
+                    <i class="bi bi-calendar-event fs-3 me-2"></i>
+                    <h2 class="mb-0">Session Details</h2>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4 fw-semibold">Course:</dt>
+                        <dd class="col-sm-8">@Model.ClassSession.Course.Name</dd>
+
+                        <dt class="col-sm-4 fw-semibold">Start Time:</dt>
+                        <dd class="col-sm-8">@Model.ClassSession.StartTime.ToString("dd MMM yyyy HH:mm")</dd>
+
+                        <dt class="col-sm-4 fw-semibold">End Time:</dt>
+                        <dd class="col-sm-8">@Model.ClassSession.EndTime.ToString("dd MMM yyyy HH:mm")</dd>
+
+                        <dt class="col-sm-4 fw-semibold">Location:</dt>
+                        <dd class="col-sm-8">
+                            @if (!string.IsNullOrWhiteSpace(Model.ClassSession.Location))
+                            {
+                                @Model.ClassSession.Location
+                            }
+                            else
+                            {
+                                <span class="text-muted">Not specified</span>
+                            }
+                        </dd>
+                        
+                        <dt class="col-sm-4 fw-semibold">Status:</dt>
+                        <dd class="col-sm-8">
+                            @{
+                                var now = DateTime.Now;
+                                if (Model.ClassSession.StartTime > now)
+                                {
+                                    <span class="badge bg-primary">Upcoming</span>
+                                }
+                                else if (Model.ClassSession.EndTime < now)
+                                {
+                                    <span class="badge bg-secondary">Past</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Ongoing</span>
+                                }
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4 fw-semibold">Attendance Taken:</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.ClassSession.Attendances.Any())
+                            {
+                                <span class="badge bg-success">Yes (@Model.ClassSession.Attendances.Count students)</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">No</span>
+                            }
+                        </dd>
+                    </dl>
+
+                    <div class="text-end mt-4">
+                        <a asp-page="Index" class="btn btn-outline-primary me-2">
+                            <i class="bi bi-arrow-left-circle me-1"></i> Back to List
+                        </a>
+                        @{
+                            var currentTime = DateTime.Now;
+                            if (Model.ClassSession.StartTime <= currentTime && Model.ClassSession.EndTime >= currentTime)
+                            {
+                                <a asp-page="/Attendance/Create" asp-route-sessionId="@Model.ClassSession.Id" class="btn btn-success">
+                                    <i class="bi bi-check-circle me-1"></i> Take Attendance
+                                </a>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            
+            @if (Model.ClassSession.Attendances.Any())
+            {
+                <div class="card shadow-sm mt-4">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Attendance Record</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var attendance in Model.ClassSession.Attendances)
+                                    {
+                                        <tr>
+                                            <td>@attendance.Student.FullName</td>
+                                            <td>
+                                                @if (attendance.IsPresent)
+                                                {
+                                                    <span class="badge bg-success">Present</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-danger">Absent</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
