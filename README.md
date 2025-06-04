@@ -182,7 +182,7 @@ The application automatically seeds:
 - View academic results
 - Update personal information
 
-## 🔧 Configuration
+## Configuration
 
 ### Application Settings
 Key configuration options in `appsettings.json`:
